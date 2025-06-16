@@ -36,7 +36,7 @@ export default function Start({ navigation }: any) {
       <TouchableOpacity
         style={styles.guestButton}
         activeOpacity={0.6}
-        onPress={() => navigation.navigate("Main")}
+        onPress={() => navigation.navigate("Home")}
       >
         <Text style={styles.guestText}>Continue as Guest</Text>
       </TouchableOpacity>

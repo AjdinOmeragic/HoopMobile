@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   Image,
   KeyboardAvoidingView,
-  Platform, 
-  ScrollView, 
+  Platform,
+  ScrollView,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -70,7 +70,7 @@ export default function Login({ navigation }: any) {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("Main")}
+            onPress={() => navigation.navigate("Home")}
           >
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>

@@ -18,3 +18,5 @@ npx expo install firebase
 
 Quiz: 
 I will be using this DB to load my questions from OTDB:(https://opentdb.com/api_config.php)
+
+NOTE: Issues with symbols popping up regarding some Questions / Answers 

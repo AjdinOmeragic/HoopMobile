@@ -84,7 +84,7 @@ export default function Register({ navigation }: any) {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("Main")}
+            onPress={() => navigation.navigate("Home")}
           >
             <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
