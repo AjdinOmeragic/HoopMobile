@@ -32,7 +32,7 @@ const HomeScreen = ({ navigation }: any) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Hoop!</Text>
+      <Text style={styles.title}> You ready? </Text>
 
       {/*--- CATEGORIE ---*/}
       <Text style={styles.label}>Select Category</Text>
@@ -80,6 +80,12 @@ const HomeScreen = ({ navigation }: any) => {
           style={{ marginTop: 20 }}
         />
       )}
+      <TouchableOpacity
+        style={styles.aboutUsButton}
+        onPress={() => navigation.navigate("About Us")}
+      >
+        <Text style={styles.aboutUsText}>About Us</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -141,6 +147,15 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "700",
+  },
+  aboutUsButton: {
+    marginTop: 200,
+  },
+  aboutUsText: {
+    color: "#6C63FF",
+    fontSize: 16,
+    fontWeight: "600",
+    textDecorationLine: "underline",
   },
 });
 
