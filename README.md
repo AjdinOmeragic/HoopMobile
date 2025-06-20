@@ -20,3 +20,8 @@ Quiz:
 I will be using this DB to load my questions from OTDB:(https://opentdb.com/api_config.php)
 
 NOTE: Issues with symbols popping up regarding some Questions / Answers 
+
+yarn add @react-native-picker/picker
+yarn cache clean
+yarn add react-native-maps
+yarn add @react-native-async-storage/async-storage

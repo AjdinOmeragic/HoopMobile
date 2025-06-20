@@ -5,10 +5,12 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  Image,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { Difficulty } from "../types/quiz";
 import { fetchCategories } from "../utils/api";
+import Footer from "../components/Footer";
 
 const HomeScreen = ({ navigation }: any) => {
   const [loading, setLoading] = useState(false);
@@ -32,7 +34,7 @@ const HomeScreen = ({ navigation }: any) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}> You ready? </Text>
+      <Text style={styles.title}>You ready?</Text>
 
       {/*--- CATEGORIE ---*/}
       <Text style={styles.label}>Select Category</Text>
@@ -80,12 +82,7 @@ const HomeScreen = ({ navigation }: any) => {
           style={{ marginTop: 20 }}
         />
       )}
-      <TouchableOpacity
-        style={styles.aboutUsButton}
-        onPress={() => navigation.navigate("About Us")}
-      >
-        <Text style={styles.aboutUsText}>About Us</Text>
-      </TouchableOpacity>
+      <Footer navigation={navigation} />
     </View>
   );
 };
@@ -96,14 +93,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#D0ECFF",
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingTop: 50,
-    paddingHorizontal: 25,
+    paddingTop: 30,
+    paddingHorizontal: 15,
+    paddingBottom: 0,
   },
   title: {
-    fontSize: 25,
+    fontSize: 28,
     fontWeight: "700",
     color: "#6C63FF",
-    marginBottom: 40,
+    marginBottom: 30,
     textAlign: "center",
   },
   label: {
@@ -112,6 +110,7 @@ const styles = StyleSheet.create({
     color: "#333",
     alignSelf: "flex-start",
     marginBottom: 8,
+    marginLeft: 5,
   },
   pickerWrapper: {
     backgroundColor: "#fff",
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     width: "100%",
-    marginBottom: 25,
+    marginBottom: 20,
     overflow: "hidden",
   },
   picker: {
@@ -128,14 +127,14 @@ const styles = StyleSheet.create({
   },
   buttonGroup: {
     width: "100%",
-    gap: 16,
+    gap: 12,
+    marginTop: 5,
   },
   button: {
     backgroundColor: "#6C63FF",
     paddingVertical: 16,
     borderRadius: 50,
     alignItems: "center",
-    marginTop: 8,
     width: "100%",
     elevation: 2,
     shadowColor: "#000",
@@ -147,15 +146,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "700",
-  },
-  aboutUsButton: {
-    marginTop: 200,
-  },
-  aboutUsText: {
-    color: "#6C63FF",
-    fontSize: 16,
-    fontWeight: "600",
-    textDecorationLine: "underline",
   },
 });
 

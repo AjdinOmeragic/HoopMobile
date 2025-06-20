@@ -11,12 +11,30 @@ import {
   ScrollView,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { User } from "../types/user";
 
 export default function Register({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const handleRegister = async () => {
+    const userData: User = {
+      username: userName,
+      email: email,
+      password: password,
+    };
+
+    try {
+      await AsyncStorage.setItem("userData", JSON.stringify(userData));
+      await AsyncStorage.setItem("isGuest", "false"); //Updates if the user is guest or not
+      navigation.navigate("Home");
+    } catch (error) {
+      console.error("Failed to save user data", error);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -25,11 +43,13 @@ export default function Register({ navigation }: any) {
     >
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
-          <Image
-            source={require("../../assets/owl.png")}
-            style={styles.image}
-            resizeMode="contain"
-          />
+          <View style={styles.logoContainer}>
+            <Image
+              source={require("../../assets/owl.png")}
+              style={styles.image}
+              resizeMode="contain"
+            />
+          </View>
 
           {/* --- USERNAME INPUT FIELD --- */}
           <View style={styles.inputWrapper}>
@@ -82,11 +102,17 @@ export default function Register({ navigation }: any) {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("Home")}
-          >
+          <TouchableOpacity style={styles.button} onPress={handleRegister}>
             <Text style={styles.buttonText}>Register</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.registerLink}
+            onPress={() => navigation.navigate("Register")}
+          >
+            <Text style={styles.registerText}>
+              Allready have an Account? Login
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -106,25 +132,15 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: "center",
   },
-  header: {
-    backgroundColor: "#BDA05D",
-    width: "100%",
-    paddingVertical: 16,
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
-    marginBottom: 30,
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 35,
-    fontWeight: "bold",
-    color: "#031F35",
+  logoContainer: {
+    marginBottom: 20,
+    padding: 10,
+    backgroundColor: "rgba(255,255,255,0.3)",
+    borderRadius: 100,
   },
   image: {
-    marginTop: 50,
-    width: 250,
-    height: 250,
-    marginBottom: 50,
+    width: 200,
+    height: 200,
   },
   inputWrapper: {
     flexDirection: "row",
@@ -165,5 +181,14 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "600",
+  },
+  registerLink: {
+    marginTop: 20,
+  },
+  registerText: {
+    fontSize: 16,
+    color: "#6C63FF",
+    textDecorationLine: "underline",
+    fontWeight: "700",
   },
 });

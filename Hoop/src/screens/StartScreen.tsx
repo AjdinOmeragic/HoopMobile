@@ -1,14 +1,17 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Start({ navigation }: any) {
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../../assets/owl.png")}
-        style={styles.image}
-        resizeMode="contain"
-      />
+      <View style={styles.logoContainer}>
+        <Image
+          source={require("../../assets/owl.png")}
+          style={styles.image}
+          resizeMode="contain"
+        />
+      </View>
 
       <View style={{ marginBottom: 40, paddingHorizontal: 10 }}>
         <Text style={styles.welcomeText}>Welcome to Hoop!</Text>
@@ -35,8 +38,10 @@ export default function Start({ navigation }: any) {
 
       <TouchableOpacity
         style={styles.guestButton}
-        activeOpacity={0.6}
-        onPress={() => navigation.navigate("Home")}
+        onPress={async () => {
+          await AsyncStorage.setItem("isGuest", "true"); //Sets guest value to true
+          navigation.navigate("Home");
+        }}
       >
         <Text style={styles.guestText}>Continue as Guest</Text>
       </TouchableOpacity>
@@ -53,10 +58,15 @@ const styles = StyleSheet.create({
     paddingTop: 70,
     paddingHorizontal: 24,
   },
+  logoContainer: {
+    marginBottom: 20,
+    padding: 10,
+    backgroundColor: "rgba(255,255,255,0.3)",
+    borderRadius: 100,
+  },
   image: {
-    width: 220,
-    height: 220,
-    marginBottom: 30,
+    width: 200,
+    height: 200,
   },
   welcomeText: {
     fontSize: 20,

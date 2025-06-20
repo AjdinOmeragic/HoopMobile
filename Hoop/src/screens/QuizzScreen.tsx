@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { fetchQuizQuestions } from "../utils/api";
 import { Difficulty, QuestionState } from "../types/quiz";
@@ -72,6 +73,13 @@ const QuizScreen = ({ route, navigation }: any) => {
         >
           <Text style={styles.buttonText}>Back to Home</Text>
         </TouchableOpacity>
+        <View style={styles.logoContainer}>
+          <Image
+            source={require("../../assets/owl.png")}
+            style={styles.image}
+            resizeMode="contain"
+          />
+        </View>
       </View>
     );
   }
@@ -141,6 +149,18 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "700",
+  },
+  logoContainer: {
+    marginTop: 80,
+    padding: 10,
+    backgroundColor: "rgba(255,255,255,0.3)",
+    borderRadius: 100,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  image: {
+    width: 200,
+    height: 200,
   },
 });
 

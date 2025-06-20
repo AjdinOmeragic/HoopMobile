@@ -9,13 +9,40 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  /*--- LOGIN HANDLING ---*/
+  // Handles the login process checking if users data is stored locally (If no found register), Compares to existing email and password if match continue loged in
+  const handleLogin = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("userData");
+
+      if (!userData) {
+        Alert.alert("Error", "No user found. Please register first.");
+        return;
+      }
+
+      const user = JSON.parse(userData);
+
+      if (user.email === email && user.password === password) {
+        await AsyncStorage.setItem("isGuest", "false");
+        navigation.navigate("Home");
+      } else {
+        Alert.alert("Error", "Invalid email or password");
+      }
+    } catch (error) {
+      Alert.alert("Error", "Failed to login. Please try again.");
+      console.error("Login error:", error);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -24,11 +51,13 @@ export default function Login({ navigation }: any) {
     >
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
-          <Image
-            source={require("../../assets/owl.png")}
-            style={styles.image}
-            resizeMode="contain"
-          />
+          <View style={styles.logoContainer}>
+            <Image
+              source={require("../../assets/owl.png")}
+              style={styles.image}
+              resizeMode="contain"
+            />
+          </View>
 
           {/* --- EMAIL INPUT FIELD ---*/}
           <View style={styles.inputWrapper}>
@@ -68,11 +97,18 @@ export default function Login({ navigation }: any) {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("Home")}
-          >
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+
+          {/*--- REGISTER NAVIGATION LINK UNDERLINE ---*/}
+          <TouchableOpacity
+            style={styles.registerLink}
+            onPress={() => navigation.navigate("Register")}
+          >
+            <Text style={styles.registerText}>
+              Don't have an account? Register
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -106,11 +142,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#031F35",
   },
+  logoContainer: {
+    marginBottom: 20,
+    padding: 10,
+    backgroundColor: "rgba(255,255,255,0.3)",
+    borderRadius: 100,
+  },
   image: {
-    marginTop: 50,
-    width: 250,
-    height: 250,
-    marginBottom: 50,
+    width: 200,
+    height: 200,
   },
   inputWrapper: {
     flexDirection: "row",
@@ -151,5 +191,14 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "600",
+  },
+  registerLink: {
+    marginTop: 20,
+  },
+  registerText: {
+    fontSize: 16,
+    color: "#6C63FF",
+    textDecorationLine: "underline",
+    fontWeight: "700",
   },
 });

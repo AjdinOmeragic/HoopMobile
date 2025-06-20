@@ -22,13 +22,6 @@ export enum Difficulty {
   HARD = "hard",
 };
 
-export type User = {
-  id: string;
-  username: string;
-  email: string;
-  password: string;
-};
-
 export type QuizResults = {
   id: string;
   userId: string;
